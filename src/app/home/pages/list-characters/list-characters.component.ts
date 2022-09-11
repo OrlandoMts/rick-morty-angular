@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
+import { Result } from '../../interfaces/character.interface';
+import { CharacterService } from '../../services/character.service';
 
 @Component({
   selector: 'app-list-characters',
@@ -8,9 +11,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListCharactersComponent implements OnInit {
 
-  constructor() { }
+  public characters: Result[] = [];
+
+  constructor(private characterService: CharacterService) { }
 
   ngOnInit(): void {
+    this.characterService.listCharacters().pipe(
+      map(data => data.results)
+    ).subscribe({
+      next: (resp) => {console.log(resp);this.characters = resp}
+    });
   }
+
+  lookCharacter(value: string) {
+    console.log(value);
+  }
+
+
 
 }

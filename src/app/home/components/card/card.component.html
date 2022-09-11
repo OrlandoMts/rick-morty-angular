@@ -1,0 +1,13 @@
+<div class="rounded-md shadow-md p-4">
+  <div class="flex justify-center">
+    <img [src]="character.image" alt="[{{character.name}}]"
+       class="w-[230px] h-[230px]">
+  </div>
+  <p>{{character.name}}</p>
+  <div class="flex flex-row justify-evenly">
+    <p>{{character.status}}</p>
+    <p>{{character.gender}}</p>
+    <p>{{character.species}}</p>
+  </div>
+  <button>Ver más...</button>
+</div>
