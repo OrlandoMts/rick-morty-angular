@@ -3,11 +3,12 @@
     <img [src]="character.image" alt="[{{character.name}}]"
        class="w-[230px] h-[230px]">
   </div>
-  <p>{{character.name}}</p>
-  <div class="flex flex-row justify-evenly">
-    <p>{{character.status}}</p>
-    <p>{{character.gender}}</p>
-    <p>{{character.species}}</p>
+  <div class="my-5">
+    <a [routerLink]="['/home/character-details/', character.id]" class="text-2xl font-bold hover:text-[#F08837] pl-4">{{character.name}}</a>
   </div>
-  <button>Ver más...</button>
+  <div class="flex flex-row justify-evenly my-2">
+    <p class="w-auto h-auto text-gray-500" > <span class="text-[#5FEA1F]">Status: </span> {{character.status}}</p>
+    <p class="w-auto h-auto  text-gray-500" > <span class="text-[#5FEA1F]">Gen: </span> {{character.gender}}</p>
+    <p class="w-auto h-auto  text-gray-500" > <span class="text-[#5FEA1F]">Specie: </span> {{character.species}}</p>
+  </div>
 </div>

@@ -8,6 +8,8 @@ import { InputComponent } from './components/input/input.component';
 import { CardComponent } from './components/card/card.component';
 import { FormsModule } from '@angular/forms';
 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
+    MatGridListModule
   ]
 })
 export class HomeModule { }

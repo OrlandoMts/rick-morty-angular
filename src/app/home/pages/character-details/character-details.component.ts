@@ -8,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CharacterDetailsComponent implements OnInit {
 
+  /**
+   * TODO: Obtener el id y hacer la peticion al api y manejar un spinner
+   */
+
   constructor() { }
 
   ngOnInit(): void {

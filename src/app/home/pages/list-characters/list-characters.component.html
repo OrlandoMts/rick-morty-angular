@@ -1,13 +1,19 @@
 <div>
 
-    <app-input
-      (onInputValue)="lookCharacter($event)">
+  <app-input
+    (onInputValue)="lookCharacter($event)">
 
-    </app-input>
+  </app-input>
 
-  <div class="sm:grid grid-cols-3 gap-4">
-    <div *ngFor="let item of characters">
-      <app-card [character]="item" ></app-card>
-    </div>
+  <div class="flex justify-center w-full" *ngIf="!characters; else list">
+    <mat-spinner></mat-spinner>
   </div>
+
+  <ng-template #list>
+    <div class="sm:grid grid-cols-3 gap-4">
+      <div *ngFor="let item of characters" class="bg-[#F6F5F4] my-7 sm:my-0 animate__animated animate__backInUp animate__faster" >
+        <app-card [character]="item"></app-card>
+      </div>
+    </div>
+  </ng-template>
 </div>

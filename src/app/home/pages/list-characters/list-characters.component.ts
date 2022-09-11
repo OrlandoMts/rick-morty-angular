@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { asyncScheduler, debounceTime, map, tap } from 'rxjs';
 import { Result } from '../../interfaces/character.interface';
 import { CharacterService } from '../../services/character.service';
 
@@ -11,22 +11,32 @@ import { CharacterService } from '../../services/character.service';
 })
 export class ListCharactersComponent implements OnInit {
 
-  public characters: Result[] = [];
+  public characters!: Result[];
 
   constructor(private characterService: CharacterService) { }
 
   ngOnInit(): void {
-    this.characterService.listCharacters().pipe(
-      map(data => data.results)
-    ).subscribe({
-      next: (resp) => {console.log(resp);this.characters = resp}
-    });
   }
 
+  public observable$ = this.characterService.listCharacters().pipe(
+    map(data => data.results)
+  );
+
+  // public subs = this.observable$.subscribe({
+  //   next: (resp) => this.characters = resp
+  // });
+
+  public subs2 = asyncScheduler.schedule(() => {
+    this.observable$.subscribe({
+      next: (resp) => this.characters = resp
+    });
+  }, 2000)
   lookCharacter(value: string) {
     console.log(value);
   }
 
-
+  // ngOnDestroy(): void {
+  //   this.subs.unsubscribe()
+  // }
 
 }
