@@ -5,12 +5,25 @@
 
   </app-input>
 
+  <!-- Caja de sugerencias -->
+  <ul *ngIf="suggestions" class="grid grid-cols-1 sm:grid-cols-5 justify-center mb-4">
+    <li class="p-2 rounded-md sm:shadow-sm grid grid-cols-2 justify-evenly"
+        *ngFor="let sugg of suggestionsCharacter">
+      <a [routerLink]="['/home/character-details/', sugg.id]" class=" hover:text-[#F08837]">{{sugg.name}}</a>
+      <img [src]="sugg.image" alt="" class="w-[25px] h-[25px]">
+    </li>
+  </ul>
+
+  <div *ngIf="!characterResp">
+    <p class="text-[#F08837] text-2xl">No se encontró el personaje buscado*</p>
+  </div>
+
   <div class="flex justify-center w-full" *ngIf="!characters; else list">
     <mat-spinner></mat-spinner>
   </div>
 
-  <ng-template #list>
-    <div class="sm:grid grid-cols-3 gap-4">
+  <ng-template #list >
+    <div class="sm:grid grid-cols-3 gap-4 mt-5">
       <div *ngFor="let item of characters" class="bg-[#F6F5F4] my-7 sm:my-0 animate__animated animate__backInUp animate__faster" >
         <app-card [character]="item"></app-card>
       </div>

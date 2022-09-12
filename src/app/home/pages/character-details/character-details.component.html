@@ -1,2 +1,10 @@
-<p>character-details works!</p>
-<a routerLink="['/home']">Regresar</a>
+<!-- <div class="flex justify-center w-full" *ngIf="!character; else card">
+  <mat-spinner></mat-spinner>
+</div> -->
+
+<div class="w-9/12 flex content-center">
+  <app-card [character]="character">
+;
+  </app-card>
+</div>
+<button (click)="backHome()" class="rounded-md shadow-sm p-3 bg-[#F08837] text-white my-3">Regresar</button>

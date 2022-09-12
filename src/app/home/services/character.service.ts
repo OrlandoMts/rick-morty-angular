@@ -11,12 +11,18 @@ export class CharacterService {
 
   constructor(private http: HttpClient) { }
 
-  // listCharacters(name: string): Observable<any> {
-  //   const url = `${environment.API}`
-  // }
+  lookCharacters(name: string): Observable<CharacterResp> {
+    const url = `${environment.API}/character/?name=${name}`;
+    return this.http.get<CharacterResp>(url);
+  }
 
   listCharacters(): Observable<CharacterResp> {
     const url = `${environment.API}/character/`;
+    return this.http.get<CharacterResp>(url);
+  }
+
+  characterById(id: number): Observable<CharacterResp> {
+    const url = `${environment.API}/character/${id}`;
     return this.http.get<CharacterResp>(url);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { asyncScheduler, debounceTime, map, tap } from 'rxjs';
+import { map} from 'rxjs';
 import { Result } from '../../interfaces/character.interface';
 import { CharacterService } from '../../services/character.service';
 
@@ -9,9 +9,13 @@ import { CharacterService } from '../../services/character.service';
   styles: [
   ]
 })
-export class ListCharactersComponent implements OnInit {
+export class ListCharactersComponent implements OnInit, OnDestroy {
 
   public characters!: Result[];
+
+  public suggestions: boolean = false;
+  public suggestionsCharacter: Result[] = [];
+  public characterResp: boolean = true;
 
   constructor(private characterService: CharacterService) { }
 
@@ -22,21 +26,30 @@ export class ListCharactersComponent implements OnInit {
     map(data => data.results)
   );
 
-  // public subs = this.observable$.subscribe({
-  //   next: (resp) => this.characters = resp
-  // });
+  public subs = this.observable$.subscribe({
+    next: (resp) => this.characters = resp
+  });
 
-  public subs2 = asyncScheduler.schedule(() => {
-    this.observable$.subscribe({
-      next: (resp) => this.characters = resp
-    });
-  }, 2000)
+  // Manejador de sugerencias
   lookCharacter(value: string) {
-    console.log(value);
+    this.suggestions = true;
+    this.characterService.lookCharacters(value).pipe(
+        map( ({results}) => results),
+      ).subscribe({
+        next: characters => {
+          this.suggestionsCharacter = characters?.splice(0,10);
+          this.characterResp = true;
+        },
+        error: error => {
+          console.error(error),
+          this.characterResp = false;
+          this.suggestionsCharacter = [];
+        }
+    });
   }
 
-  // ngOnDestroy(): void {
-  //   this.subs.unsubscribe()
-  // }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
+  }
 
 }
