@@ -9,6 +9,10 @@
   <div class="flex flex-row justify-evenly my-2">
     <p class="w-auto h-auto text-gray-500" > <span class="text-[#5FEA1F]">Status: </span> {{character.status}}</p>
     <p class="w-auto h-auto  text-gray-500" > <span class="text-[#5FEA1F]">Gen: </span> {{character.gender}}</p>
+  </div>
+  <div *ngIf="moreInfo" class="flex flex-col justify-evenly my-2">
     <p class="w-auto h-auto  text-gray-500" > <span class="text-[#5FEA1F]">Specie: </span> {{character.species}}</p>
+    <p class="w-auto h-auto text-gray-500" > <span class="text-[#5FEA1F]">Loc: </span> {{character.location?.name}}</p>
+    <p class="w-auto h-auto  text-gray-500" > <span class="text-[#5FEA1F]">Origin: </span> {{character.origin?.name}}</p>
   </div>
 </div>

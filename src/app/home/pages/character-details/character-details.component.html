@@ -1,10 +1,12 @@
-<!-- <div class="flex justify-center w-full" *ngIf="!character; else card">
-  <mat-spinner></mat-spinner>
-</div> -->
-
-<div class="w-9/12 flex content-center">
-  <app-card [character]="character">
-;
-  </app-card>
+<div class="flex justify-center w-full" *ngIf="!character; else card">
+  <mat-spinner color="accent"></mat-spinner>
 </div>
-<button (click)="backHome()" class="rounded-md shadow-sm p-3 bg-[#F08837] text-white my-3">Regresar</button>
+
+<ng-template #card>
+  <div class="w-9/12 flex content-center">
+    <app-card [character]="character" [moreInfo]="character">
+    </app-card>
+  </div>
+  <button (click)="backHome()" class="rounded-md shadow-sm p-3 bg-[#F08837] text-white my-3">Regresar</button>
+
+</ng-template>

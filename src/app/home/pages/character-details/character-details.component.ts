@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import { asyncScheduler, Subscription, switchMap, tap } from 'rxjs';
+import { Result } from '../../interfaces/character.interface';
 import { CharacterService } from '../../services/character.service';
 
 @Component({
@@ -9,25 +10,33 @@ import { CharacterService } from '../../services/character.service';
   styles: [
   ]
 })
-export class CharacterDetailsComponent implements OnInit {
+export class CharacterDetailsComponent implements OnInit, OnDestroy {
 
 
-  public character = {}
+  public character!: any; // Lo hice asi para poder mostrar el loader
+  public subs!: Subscription;
+
   constructor(private activatedRoute: ActivatedRoute, private characterService: CharacterService, private router: Router) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(
-      switchMap( ({id}) => this.characterService.characterById(Number(id))),
-      tap( (data)=> console.log(data))
-    ).subscribe({
-      next: (res) => this.character = res,
-      error: console.log
-    })
+    this.subs = asyncScheduler.schedule( () => {
+      this.activatedRoute.params.pipe(
+        switchMap( ({id}) => this.characterService.characterById(Number(id))),
+        tap( (data)=> console.log(data))
+      ).subscribe({
+        next: (res) => this.character = res,
+        error: console.log
+      })
+    }, 700)
 
   }
 
   backHome() {
     this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
 }

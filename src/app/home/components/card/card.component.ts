@@ -10,6 +10,7 @@ import { Result } from '../../interfaces/character.interface';
 export class CardComponent implements OnInit {
 
   @Input() character: Result = {};
+  @Input() moreInfo!: any;
 
   constructor() { }
 
